@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8">
+		<meta name="description" content="Juego 1">
+		
+		<meta name="author" content="Miguel Pérez">
+		<title>La leyenda de la llorona</title>
+		
+		<link rel="stylesheet" type="text/css" href="estilos/default.css" media="screen">
+		<script src="js/jquery-1.11.0.min.js" language="JavaScript1.2"></script>
+        <script src="js/persona.js" language="JavaScript1.2"></script>
+        <script src="js/jugador.js" language="JavaScript1.2"></script>
+		
+		<script src="js/script.js" language="JavaScript1.2"></script>
+
+		
+		
+	</head>
+	<body>
+		<section>
+			<canvas id="mi_canvas" width="640" height="480">
+				Tu navegador no es compatible
+			</canvas>			
+		</section>
+		<section>
+			<div id="popup" style="display: none;">
+				<div class="content-popup">
+					<div class="close"><a href="#" id="close"><img src="imagenes/close.png"/></a></div>
+					<div>
+					   <h2>Teclas de juego</h2>
+					   <img src="imagenes/teclado.png"/>
+					   
+					</div>
+				</div>
+			</div>
+			<h1>CONTRA EL COVID19</h1>
+			<button id="instrucciones">Ver Instrucciones</button><br>
+			<button id="iniciar">Iniciar</button>
+		</section>
+		<audio id="pierde">
+			<source src="sonidos/pierde_vida.ogg" type="audio/ogg">
+			<source src="sonidos/pierde_vida.mp3" type="audio/mpeg">
+			<source src="sonidos/pierde_vida.wav" type="audio/wav">
+			Tu navegador no es compatible
+		</audio>
+		
+		
+        <img id="persona" src="imagenes/persona.png"/>
+        <img id="infectado" src="imagenes/infectado.png"/>
+        <img id="jugador" src="imagenes/jugador.png"/>
+		
+		
+	</body>
+</html>
+
