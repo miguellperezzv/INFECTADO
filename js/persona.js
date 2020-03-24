@@ -52,38 +52,38 @@ function Persona(x,y){
 	this.actualizar = function(){
 
 
-		velocidad=1;
+		this.velocidad=1;
         
         if(this.controlY==1)
         {
-            this.y+=velocidad;
+            this.y+=this.velocidad;
         }else{
-            this.y-=velocidad;
+            this.y-=this.velocidad;
         }
         if(this.y<0)
         {
             this.controlY=1;
-            this.y=velocidad;
-        }else if(this.y>=this.width){
+            this.y=this.velocidad;
+        }else if(this.y>=this.height){
             this.controlY=0;
-            this.y=this.width;
+            this.y=this.height;
         }
 
         // horizontal
         if(this.controlX==1)
         {
-            this.x+=velocidad;
+            this.x+=this.velocidad;
         }else{
-            this.x-=velocidad;
+            this.x-=this.velocidad;
         }
 
         if(this.x<0)
         {
             this.controlX=1;
-            this.x=velocidad;
-        }else if(this.x>=this.height){
+            this.x=this.velocidad;
+        }else if(this.x>=this.width){
             this.controlX=0;
-            this.x=this.height;
+            this.x=this.width;
         }
         
         
@@ -94,6 +94,9 @@ function Persona(x,y){
             var distancia=Math.sqrt( Math.pow( (personas[j].x-this.x), 2)+Math.pow( (personas[j].y-this.y),2));
             if(distancia<20 && personas[j].infectado==true){
                 this.infectado=true;
+            }
+            if(distancia<20 && personas[j].inmune==true){
+                this.infectado=false;
             }
         }
 }

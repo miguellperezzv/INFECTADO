@@ -1,5 +1,6 @@
 
-var jugando;
+var jugando =1;
+
 
 $(document).ready(inicio);
 $(document).keydown(capturaTeclado);
@@ -12,12 +13,12 @@ function inicio(){
 	jugador = new Jugador();
 	personas = [];
 
-	for (j=0;j<100;j++){
+	for (j=0;j<200;j++){
 		personas[j] = new Persona();
 	}
 	run();	
 	
-	$('#instrucciones').click(function(){
+	$('#info').click(function(){
         $('#popup').fadeIn('slow');
         $('.popup-overlay').fadeIn('slow');
         $('.popup-overlay').height($(window).height());
@@ -53,9 +54,9 @@ function run(){
 	buffer.height = miCanvas.height;
 	contextoBuffer = buffer.getContext("2d");
 		 
-	if(jugando){  
+	if(jugando==1){  
 		contextoBuffer.clearRect(0,0,buffer.width,buffer.height);
-
+		this.erradicado=0;
 		jugador.dibujar(contextoBuffer);
 		for(i=0;i<personas.length;i++){
 			if(i==10){
@@ -67,11 +68,12 @@ function run(){
 			personas[i].colision(personas);
 			if(jugador.colision(personas[i].x,personas[i].y)==true && personas[i].infectado ==true){
 				jugador.infectado==true;
-				this.jugando=false;
+				this.jugando=2 ;
 				//alert("jugadro inf");
-				//$('#pierde')[0].play();
+				$('#pierde')[0].play();
 			}
 		}	
+		
 		
 		
 		
@@ -79,7 +81,7 @@ function run(){
 		contexto.drawImage(buffer, 0, 0);
 		setTimeout("run()",20);
 		
-	}else{
+	}else if (jugando ==2){
 		contextoBuffer.clearRect(0,0,buffer.width,buffer.height);
 		contextoBuffer.fillStyle = "#ffffff";
 		
@@ -90,6 +92,20 @@ function run(){
 		contextoBuffer.fillStyle = "#ff0000";
 		contextoBuffer.font = "15px sans-serif";
 		contextoBuffer.fillText("try again", 550, 460);
+		contexto.clearRect(0,0,miCanvas.width,miCanvas.height);
+		contexto.drawImage(buffer, 0, 0);
+	}
+	else if(jugando==3){
+		contextoBuffer.clearRect(0,0,buffer.width,buffer.height);
+		contextoBuffer.fillStyle = "#ffffff";
+		
+		jugador.infectado=false;
+		jugador.dibujar(contextoBuffer);
+		contextoBuffer.font = "50px sans-serif";
+		contextoBuffer.fillText("GANASTE!", 300, 440);
+		contextoBuffer.fillStyle = "#ff0000";
+		contextoBuffer.font = "15px sans-serif";
+		contextoBuffer.fillText("PARTIDA TERMINADA", 550, 460);
 		contexto.clearRect(0,0,miCanvas.width,miCanvas.height);
 		contexto.drawImage(buffer, 0, 0);
 	}
