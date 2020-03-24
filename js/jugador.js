@@ -1,14 +1,23 @@
 function Jugador(){
 	this.x = 310;
 	this.y = 15;
-	this.img = [$("#jugador")[0], $("#infectado")[0]];
-	this.sprite = 0;
-	this.vida = 100;
+	this.imgJugador = $("#jugador")[0]; 
+	this.imgInfectado = $("#infectado")[0];
+	
+	this.infectado = false;
 	this.puntos = 0;
 	this.seguro = "arriba";
+	this.width=$('#mi_canvas').width();
+    this.height=$('#mi_canvas').height();
 	
 	this.dibujar = function(ctx){
-		var img = this.img[this.sprite];
+		if(this.infectado==true){
+			var img = this.imgInfectado;
+		}
+		if(this.infectado==false){
+			var img = this.imgJugador;
+		}
+		
 		var x = this.x;
 		var y = this.y;
 		ctx.drawImage(img, x, y);
@@ -30,7 +39,7 @@ function Jugador(){
 			this.y -= 10;
 			//this.sprite = 1;
 		}
-		if(accion=="abajo"  && this.y < 390){
+		if(accion=="abajo"  && this.y < this.height){
 			this.y += 10;
 			//this.sprite = 0;
 		}
@@ -44,17 +53,17 @@ function Jugador(){
         }
         
         
-		this.x = (640 + this.x)%640;
-		this.y = (480 + this.y)%480;
-		
+		this.x = (this.width + this.x)%this.width;
+		this.y = (this.height + this.y)%this.height;
+		this.puntos++;
 		
 	}
 	
 	this.colision = function(x,y){
 		var distancia=Math.sqrt( Math.pow( (x-this.x), 2)+Math.pow( (y-this.y),2));
-		if(distancia>this.img[this.sprite].width)
-		   return false;
+		if(distancia<this.imgJugador.width)
+		   return true;
 		else
-		   return true;	
+		   return false;	
 	}
 }

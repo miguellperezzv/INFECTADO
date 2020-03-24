@@ -1,3 +1,4 @@
+
 var jugando;
 
 $(document).ready(inicio);
@@ -9,18 +10,14 @@ function inicio(){
 	contexto = miCanvas.getContext("2d");
 	buffer = document.createElement("canvas");
 	jugador = new Jugador();
-    personas =[];
-    for(j=0;j<10;j++){
-        personas[j] = new Persona();
-        if(j==5){
-            for(k=j;k>0; k--){
-                personas[k].infectado=true;
-            }
-        }
-    }
-    run();	
-    
-    $('#instrucciones').click(function(){
+	personas = [];
+
+	for (j=0;j<100;j++){
+		personas[j] = new Persona();
+	}
+	run();	
+	
+	$('#instrucciones').click(function(){
         $('#popup').fadeIn('slow');
         $('.popup-overlay').fadeIn('slow');
         $('.popup-overlay').height($(window).height());
@@ -43,11 +40,11 @@ function capturaTeclado(event){
 	if(event.which==38 || event.which==87)
 		jugador.actualizar('arriba');
 	if(event.which==40 || event.which==83)
-		jugador.actualizar('abajo');
+	jugador.actualizar('abajo');
 	if(event.which==39 || event.which==68)
-		jugador.actualizar('derecha');
+	jugador.actualizar('derecha');
 	if(event.which==37 || event.which==65)
-		jugador.actualizar('izquierda');
+	jugador.actualizar('izquierda');
 	
 }
 
@@ -61,31 +58,32 @@ function run(){
 
 		jugador.dibujar(contextoBuffer);
 		for(i=0;i<personas.length;i++){
-            
-			personas[i].dibujar(contextoBuffer);
-			if(jugador.colision(personas[i].x,personas[i].y)){
-                if(personas[i].infectado==true){
-                    jugador.sprite = 1;
-                    jugador.vida--;
-                    $('#pierde')[0].play();
-                }
+			if(i==10){
+				personas[i].infectado=true;
 				
-            }
-            personas[i].colision(personas);
-		}
+			}
+			personas[i].dibujar(contextoBuffer);
+			personas[i].actualizar();
+			personas[i].colision(personas);
+			if(jugador.colision(personas[i].x,personas[i].y)==true && personas[i].infectado ==true){
+				jugador.infectado==true;
+				this.jugando=false;
+				//alert("jugadro inf");
+				//$('#pierde')[0].play();
+			}
+		}	
 		
-		if(jugador.vida <= 0)
-			jugando = false;
+		
 		
 		contexto.clearRect(0,0,miCanvas.width,miCanvas.height);
 		contexto.drawImage(buffer, 0, 0);
-		setTimeout("run()",50);
+		setTimeout("run()",20);
 		
 	}else{
 		contextoBuffer.clearRect(0,0,buffer.width,buffer.height);
 		contextoBuffer.fillStyle = "#ffffff";
-		jugador.sprite = 1;
-		jugador.vida = 0;
+		
+		jugador.infectado=false;
 		jugador.dibujar(contextoBuffer);
 		contextoBuffer.font = "50px sans-serif";
 		contextoBuffer.fillText("GAMEOVER", 300, 440);
@@ -97,3 +95,4 @@ function run(){
 	}
 	
 }
+
